@@ -83,20 +83,6 @@ steps:
   displayName: 'npm config set registry'
   enabled: false
 
-- powershell: |
-   $path = '.\DNN Platform\Library\Properties\AssemblyInfo.cs'
-   $pattern3 = '\[assembly: AssemblyStatus'
-   (Get-Content $path) | ForEach-Object{
-      if($_ -match $pattern3){
-       # We have found the matching line
-       '[assembly: AssemblyStatus(ReleaseMode.{0})]' -f '${{ parameters.ReleaseMode }}'
-      } else {
-       $_
-      }
-     } | Set-Content $path
-   
-  displayName: 'Update Alpha/Beta/Stable flag'
-
 - task: PowerShell@2
   displayName: 'Run DNN Build via Cake'
   inputs:
